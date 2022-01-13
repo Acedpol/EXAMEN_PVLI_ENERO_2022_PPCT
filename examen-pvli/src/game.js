@@ -3,8 +3,8 @@
 
 // ---------------------------------
 
-import Boot from './boot.js';
-import Jetpac from './jetpac.js';
+import Boot from './scenes/boot.js';
+import Jetpac from './scenes/jetpac.js';
 
 window.onload = ()=>{
 
