@@ -1,3 +1,5 @@
+export default class Boot extends Phaser.Scene 
+{
     /**
      * Constructor de la escena
      */
@@ -7,11 +9,18 @@
       });
     }
 
+    preload() 
+    {
     }
 
+    create() 
+    {
 
     }
 
+    update() 
+    {
 
+    }
 
 }
