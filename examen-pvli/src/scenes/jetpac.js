@@ -1,3 +1,5 @@
+import player from '../game/player.js'
+
 export default class JetPac extends Phaser.Scene 
 {
     /** @type {Phaser.Physics.Arcade.Sprite} */
@@ -12,6 +14,7 @@ export default class JetPac extends Phaser.Scene
             key: 'jetpacGame'
         });
     }
+
     preload() 
     {
         
@@ -22,9 +25,6 @@ export default class JetPac extends Phaser.Scene
         // gets the sizes of the screen
         const { width, height } = this.scale
 
-        // creates the player in the middle of the screen
-        this.player = this.add.sprite(width * 0.5, height * 0.5, 'jetpac', 7)
-            .play('walk')
         
     }
 
