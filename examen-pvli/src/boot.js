@@ -19,7 +19,7 @@ export default class Boot extends Phaser.Scene
     create() 
     {
         // creates walk animation for player
-        this.player.anims.create({
+        this.anims.create({
             key: 'walk',
             frames: this.anims.generateFrameNames('jetpac', { start: 4, end: 7 }),
             frameRate: 10,
