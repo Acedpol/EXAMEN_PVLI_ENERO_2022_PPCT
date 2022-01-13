@@ -1,3 +1,8 @@
+// import Phaser from '../lib/phaser.js'
+// Como esta implementado no hace falta importar en cada scrypt
+
+// ---------------------------------
+
 import Boot from './boot.js';
 import Jetpac from './jetpac.js';
 
@@ -18,3 +23,5 @@ window.onload = ()=>{
 
     new Phaser.Game(config);
 };
+
+// ---------------------------------
