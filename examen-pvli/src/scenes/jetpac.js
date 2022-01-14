@@ -20,7 +20,7 @@ export default class JetPac extends Phaser.Scene
     /**
      * Constructor de la escena
      */
-    constructor(level) 
+    constructor() 
     {
         super({
             key: 'jetpacGame'
@@ -35,7 +35,7 @@ export default class JetPac extends Phaser.Scene
 
         // Level parameters by difficulty
         this.fuelCollected = 0
-        
+
         if (this.level == 1)
         {
             this.fuelToFinish = 2
