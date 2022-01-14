@@ -1,6 +1,6 @@
 export default class Player extends Phaser.Physics.Arcade.Sprite
 {
-    /** @type {Phaser.Physics.Arcade.Sprite} */
+    /** @type {Phaser.Scene} */
     scene
 
     /** @type {Phaser.Types.Input.Keyboard.CursorKeys} */
@@ -22,6 +22,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
         this.scene.physics.add.existing(this)
         this.play('walk')
         this.cursors = scene.input.keyboard.createCursorKeys() // init cursors
+
+        // disable some direction colliders from player
+        this.body.checkCollision.up = false
+        this.body.checkCollision.right = false
+        this.body.checkCollision.left = false
+
+        // colisiona con los limites del mundo pero no por arriba
+        this.body.collideWorldBounds = true
+        this.scene.physics.world.checkCollision.up = false
     }
 
     preUpdate(t,dt) 
@@ -51,6 +60,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
             this.setVelocityY(-100)
             if (this.anims.currentAnim.key != 'jump')
                 this.play('jump')
+        }
+
+        // check if player is touching something below it
+        const touchingDown = this.body.touching.down
+
+        if (touchingDown && this.anims.currentAnim.key != 'walk')
+        {
+            this.play('walk')
         }
     }
 }
