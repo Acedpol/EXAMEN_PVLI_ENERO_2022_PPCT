@@ -8,14 +8,49 @@ export default class JetPac extends Phaser.Scene
     /** @type {Phaser.Physics.Arcade.StaticBody} */
     platform
 
+    /** @type {Phaser.GameObjects.Text} */
+    fuelCollectedText
+
+    /** @type {Number} */
+    level
+    fuelCollected
+    fuelToFinish
+    cooldownAsteroids
+
     /**
      * Constructor de la escena
      */
-    constructor() 
+    constructor(level) 
     {
         super({
             key: 'jetpacGame'
         });
+    }
+
+    init(level)
+    {
+        // Level select assignment
+        this.level = level
+        console.log('Level = ' + this.level)
+
+        // Level parameters by difficulty
+        this.fuelCollected = 0
+        
+        if (this.level == 1)
+        {
+            this.fuelToFinish = 2
+            this.cooldownAsteroids = 2
+        }
+        else if (this.level == 2)
+        {
+            this.fuelToFinish = 3
+            this.cooldownAsteroids = 1
+        }
+        else if (this.level == 3)
+        {
+            this.fuelToFinish = 5
+            this.cooldownAsteroids = 0.5
+        }
     }
 
     preload() 

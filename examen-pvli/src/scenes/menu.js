@@ -47,10 +47,13 @@ export default class Menu extends Phaser.Scene
         
     }
 
-    initGame()
+    /**
+    * @param {number} lv Nivel de dificultad
+     */
+    initGame(lv)
     {
         // inits the game main scene
-        this.scene.start('jetpacGame')
+        this.scene.start('jetpacGame', lv)
     }
 
     /**
