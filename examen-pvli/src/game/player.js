@@ -41,7 +41,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
         super.preUpdate(t,dt)
 
         // check if player is touching something below it
-        const touchingDown = this.body.touching.down
+        const touchingDown = this.body.onFloor()
 
         // walk animation
         if (touchingDown && (this.cursors.left.isDown || this.cursors.right.isDown))
