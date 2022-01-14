@@ -26,6 +26,14 @@ export default class Boot extends Phaser.Scene
             repeat: -1
         })
 
+        // creates jump animation for player
+        this.anims.create({
+          key: 'jump',
+          frames: this.anims.generateFrameNames('jetpac', { start: 0, end: 3 }),
+          frameRate: 10,
+          repeat: -1
+        })
+
         // inits the game main scene
         this.scene.start('jetpacGame');
     }

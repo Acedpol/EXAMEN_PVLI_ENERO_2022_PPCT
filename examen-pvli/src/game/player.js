@@ -49,6 +49,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
         if (this.cursors.up.isDown)
         {
             this.setVelocityY(-300)
+            this.play('jump')
         }
         else
         {
