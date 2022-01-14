@@ -14,6 +14,9 @@ export default class Boot extends Phaser.Scene
         // player spritesheet
         this.load.spritesheet('jetpac', "./assets/sprites/jetpac.png", 
             { frameWidth: 17, frameHeight: 24 }) 
+
+        // platform
+        this.load.image('platform', './assets/sprites/tileset.png')
     }
 
     create() 
