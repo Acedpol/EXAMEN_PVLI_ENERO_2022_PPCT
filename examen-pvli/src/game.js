@@ -23,7 +23,7 @@ window.onload = ()=>{
             default: 'arcade',
             arcade: {
                 gravity: {
-                    y: 0
+                    y: 300
                 },
                 debug: false // for showing box-colliders
             }
