@@ -55,6 +55,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
         }
         else if (touchingDown)
         {
+            console.log("touching down")
             // initial animation pause
             this.play('walk')
             this.anims.pause()
@@ -63,12 +64,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
         // left and right input logic
         if (this.cursors.left.isDown)
         {
-            this.setVelocityX(-20)
+            this.setVelocityX(-100)
             this.flipX = true
         }
         else if (this.cursors.right.isDown)
         {
-            this.setVelocityX(20)
+            this.setVelocityX(100)
             this.flipX = false
         }
         else
