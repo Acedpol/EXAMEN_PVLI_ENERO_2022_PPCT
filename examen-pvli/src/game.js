@@ -5,6 +5,7 @@
 
 import Boot from './scenes/boot.js';
 import Jetpac from './scenes/jetpac.js';
+import Menu from './scenes/menu.js';
 
 window.onload = ()=>{
 
@@ -18,7 +19,7 @@ window.onload = ()=>{
             // autoCenter: Phaser.Scale.Center.CENTER_HORIZONTALLY
         },
         pixelArt: true,
-        scene: [ Boot, Jetpac ],
+        scene: [ Boot, Jetpac, Menu ],
         physics: {
             default: 'arcade',
             arcade: {

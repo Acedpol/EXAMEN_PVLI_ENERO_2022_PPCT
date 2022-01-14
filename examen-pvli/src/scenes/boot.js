@@ -11,12 +11,17 @@ export default class Boot extends Phaser.Scene
 
     preload() 
     {
+        console.log("Boot scene")
+
         // player spritesheet
         this.load.spritesheet('jetpac', "./assets/sprites/jetpac.png", 
             { frameWidth: 17, frameHeight: 24 }) 
 
         // platform
         this.load.image('platform', './assets/sprites/tileset.png')
+
+        // button
+        this.load.image('button', './assets/images/button.png')
     }
 
     create() 
@@ -37,8 +42,8 @@ export default class Boot extends Phaser.Scene
           repeat: -1
         })
 
-        // inits the game main scene
-        this.scene.start('jetpacGame');
+        // inits the game menu scene
+        this.scene.start('menuGame')
     }
 
     update() 

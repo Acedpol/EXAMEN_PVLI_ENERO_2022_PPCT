@@ -20,7 +20,7 @@ export default class JetPac extends Phaser.Scene
 
     preload() 
     {
-
+        console.log("Jetpac scene")
     }
 
     create() 
