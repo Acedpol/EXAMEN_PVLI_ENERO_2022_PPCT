@@ -78,14 +78,14 @@ export default class JetPac extends Phaser.Scene
         // this.physics.add.collider(this.player, this.platform)
 
         // follow the player
-        this.cameras.main.startFollow(this.player)
-
-        // set the horizontal dead zone to 1.5x game width
-        this.cameras.main.setDeadzone(width * 1.25, height)
+        this.cameras.main.startFollow(this.player)        
 
         // creates the game map
         this.map = this.createMap('nivel', 8, 8, 'platform', 'img_tilemap', 'platforms')
         this.physics.add.collider(this.player, this.groundLayer)
+
+        // World Bounds and Camera dead zones properties
+        this.worldBoundsNCameraDeadZones()
     }
 
     update() 
@@ -119,13 +119,20 @@ export default class JetPac extends Phaser.Scene
     
         // definición de colisiones: -> con propiedad en TILED
         this.groundLayer.setCollisionByProperty({ suelo: true })
-    
-        // tamaño del mundo de juego:
-        this.physics.world.setBounds(0, 0, map.tileWidth * map.width, map.tileHeight * map.height);
-    
-        // creación del timer principal
-        // this.countdown.start(this.handleCountdown.bind(this))
-
+        
         return map
+    }
+
+    // Sets these properties adjust to the created map
+    worldBoundsNCameraDeadZones()
+    {
+        const mapWidth = this.map.width * this.map.tileWidth
+        const mapHeight = this.map.height * this.map.tileHeight
+    
+        // tamaño del mundo de juego
+        this.physics.world.setBounds(mapWidth * (-0.5), 0, mapWidth * 2, mapHeight);
+
+        // set the horizontal dead zone to 1.5x game width        
+        this.cameras.main.setDeadzone(mapWidth * 1.25, mapHeight * 0.75)
     }
 }
