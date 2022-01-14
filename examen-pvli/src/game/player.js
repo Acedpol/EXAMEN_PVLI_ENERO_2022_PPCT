@@ -69,5 +69,25 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
         {
             this.play('walk')
         }
+
+        // wraps the player (movimiento toroidal)
+        this.horizontalWrap(this)
+    }
+
+    /**
+    * @param {Phaser.GameObjects.Sprite} sprite
+    */
+    horizontalWrap(sprite)
+    {
+        const halfWidth = sprite.displayWidth * 0.5
+        const gameWidth = this.scene.scale.width
+        if (sprite.x < -halfWidth)
+        {
+            sprite.x = gameWidth + halfWidth
+        }
+        else if (sprite.x > gameWidth + halfWidth)
+        {
+            sprite.x = -halfWidth
+        }
     }
 }
