@@ -73,10 +73,6 @@ export default class JetPac extends Phaser.Scene
         // creates the player in the middle of the screen
         this.player = new player(this, width * 0.5, height * 0.5, 'jetpac', 7)
 
-        // add centralize platform with physics collides
-        // this.platform = this.physics.add.staticSprite(width * 0.5, height - 25, 'platform')
-        // this.physics.add.collider(this.player, this.platform)
-
         // follow the player
         this.cameras.main.startFollow(this.player)        
 
@@ -85,7 +81,7 @@ export default class JetPac extends Phaser.Scene
         this.physics.add.collider(this.player, this.groundLayer)
 
         // World Bounds and Camera dead zones properties
-        this.worldBoundsNCameraDeadZones()
+        this.worldBoundsNCameraDeadZones(this.map)
     }
 
     update() 
@@ -123,16 +119,22 @@ export default class JetPac extends Phaser.Scene
         return map
     }
 
-    // Sets these properties adjust to the created map
-    worldBoundsNCameraDeadZones()
+    /**
+     * Ajusta los límites del mundo de juego y
+     * los parámetros de seguimiento de la cámara
+     * al tamaño del mapa ya creado
+     * @param {Phaser.Tilemaps.Tilemap} map Mapa del juego ya creado
+     */ 
+    worldBoundsNCameraDeadZones(map)
     {
-        const mapWidth = this.map.width * this.map.tileWidth
-        const mapHeight = this.map.height * this.map.tileHeight
+        // dimensiones del mapa
+        const mapWidth = map.width * map.tileWidth
+        const mapHeight = map.height * map.tileHeight
     
         // tamaño del mundo de juego
         this.physics.world.setBounds(mapWidth * (-0.5), 0, mapWidth * 2, mapHeight);
 
-        // set the horizontal dead zone to 1.5x game width        
+        // set the horizontal dead zone to 1.5x game width         
         this.cameras.main.setDeadzone(mapWidth * 1.25, mapHeight * 0.75)
     }
 }
