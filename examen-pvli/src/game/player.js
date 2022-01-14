@@ -44,5 +44,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
             // stop movement if not left or right
             this.setVelocityX(0)
         }
+
+        // jump input logic
+        if (this.cursors.up.isDown)
+        {
+            this.setVelocityY(-300)
+        }
+        else
+        {
+            // stop movement if not up
+            this.setVelocityY(0)
+        }
     }
 }
