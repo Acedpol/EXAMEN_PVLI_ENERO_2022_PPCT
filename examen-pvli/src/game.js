@@ -18,7 +18,17 @@ window.onload = ()=>{
             // autoCenter: Phaser.Scale.Center.CENTER_HORIZONTALLY
         },
         pixelArt: true,
-        scene: [ Boot, Jetpac ]
+        scene: [ Boot, Jetpac ],
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: {
+                    y: 0
+                },
+                debug: false // for showing box-colliders
+            }
+        }
+        
     };
 
     new Phaser.Game(config);
