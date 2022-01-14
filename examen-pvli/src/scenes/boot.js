@@ -23,6 +23,9 @@ export default class Boot extends Phaser.Scene
         // button
         this.load.image('button', './assets/images/button.png')
 
+        // fuel
+        this.load.image('fuel', './assets/sprites/fuel.png')
+
         // map
         this.load.image('img_tilemap', './assets/sprites/tileset.png');
         this.load.tilemapTiledJSON('nivel', './assets/map/space-jetpac.json');
@@ -47,7 +50,7 @@ export default class Boot extends Phaser.Scene
         })
 
         // inits the game menu scene
-        this.scene.start('menuGame')
+        this.scene.start('jetpacGame')
     }
 
     update() 

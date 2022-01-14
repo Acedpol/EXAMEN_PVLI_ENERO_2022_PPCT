@@ -55,7 +55,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
         }
         else if (touchingDown)
         {
-            console.log("touching down")
             // initial animation pause
             this.play('walk')
             this.anims.pause()

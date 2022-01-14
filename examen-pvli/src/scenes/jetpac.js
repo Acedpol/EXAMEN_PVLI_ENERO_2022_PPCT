@@ -1,9 +1,13 @@
+import Fuel from '../game/fuel.js'
 import player from '../game/player.js'
 
 export default class JetPac extends Phaser.Scene 
 {
     /** @type {Phaser.Physics.Arcade.Sprite} */
     player
+
+    /** @type {Phaser.Physics.Arcade.Image} */
+    fuel
 
     /** @type {Phaser.Physics.Arcade.StaticBody} */
     platform
@@ -68,7 +72,6 @@ export default class JetPac extends Phaser.Scene
     {
         // gets the sizes of the screen
         const{width,height} = this.scale
-        this.physics.world.setBounds(-256/2, 0, 256*2, 192)
 
         // creates the player in the middle of the screen
         this.player = new player(this, width * 0.5, height * 0.5, 'jetpac', 7)
@@ -82,6 +85,10 @@ export default class JetPac extends Phaser.Scene
 
         // World Bounds and Camera dead zones properties
         this.worldBoundsNCameraDeadZones(this.map)
+
+        // Combustible
+        this.fuel = new Fuel(this, Phaser.Math.Between(25, width - 25), Phaser.Math.Between(25, height - 25), 'fuel')
+        this.physics.add.collider(this.fuel, this.groundLayer)
     }
 
     update() 
