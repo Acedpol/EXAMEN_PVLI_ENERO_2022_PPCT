@@ -26,9 +26,6 @@ export default class JetPac extends Phaser.Scene
         const { width, height } = this.scale
 
         // creates the player in the middle of the screen
-        // this.player = this.add.sprite(width * 0.5, height * 0.5, 'jetpac', 7)
-        //     .play('walk')
-
         this.player = new player(this, width * 0.5, height * 0.5, 'jetpac', 7)
         
     }

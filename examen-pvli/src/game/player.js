@@ -4,7 +4,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
     scene
 
     /**
-     * Constructor de la escena 
+     * Constructor del jugador
+     * @param {Phaser.Scene} scene Escena a la que pertenece el jugador
+     * @param {number} x Coordenada X
+     * @param {number} y Coordenada Y
+     * @param {Phaser.Textures.Texture} texture Textura usada en el jugador (spritesheet)
+     * @param {number} frame Indice del frame utilizado
      */
     constructor(scene, x, y, texture, frame) 
     {
@@ -14,20 +19,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
         this.scene.add.existing(this)
         this.play('walk')
     }
-    
-    preload() 
-    {
-        
-    }
 
-    create() 
+    preUpdate(t,dt) 
     {
-        // gets the sizes of the screen
-        const { width, height } = this.scene.scale        
-    }
-
-    update() 
-    {
-        
+        super.preUpdate(t,dt)
     }
 }
