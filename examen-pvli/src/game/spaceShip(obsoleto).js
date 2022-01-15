@@ -1,4 +1,4 @@
-import PlayerContainer from '../game/playerContainer.js'
+import PlayerContainer from './playerContainer.js'
 
 export default class SpaceShip extends Phaser.Physics.Arcade.Image
 {

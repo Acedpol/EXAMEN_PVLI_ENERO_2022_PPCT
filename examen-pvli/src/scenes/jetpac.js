@@ -1,6 +1,6 @@
 import Fuel from '../game/fuel.js'
 import PlayerContainer from '../game/playerContainer.js'
-import SpaceShip from '../game/spaceShip.js'
+import SpaceShip from '../game/spaceShipContainer.js'
 
 export default class JetPac extends Phaser.Scene 
 {
@@ -13,7 +13,7 @@ export default class JetPac extends Phaser.Scene
     /** @type {Fuel} */
     fuel
 
-    /** @type {SpaceShip} */
+    /** @type {SpaceShipContainer} */
     spaceShip
 
     /** @type {Phaser.Physics.Arcade.StaticBody} */
@@ -177,7 +177,7 @@ export default class JetPac extends Phaser.Scene
         }
         else
         {
-            this.spaceShip.lista = true
+            this.spaceShip.listaParaDespegue = true
             // inits the game main scene
             // this.scene.start('GameOver')
         }
@@ -193,14 +193,17 @@ export default class JetPac extends Phaser.Scene
         const mapWidth = map.width * map.tileWidth
         const mapHeight = map.height * map.tileHeight
 
+        // Añade la nave como Imagen
+        let spaceShip = this.add.image(0, 0, 'ship')
+
         // creates the ship
-        this.spaceShip = new SpaceShip(this, mapWidth * 0.6, mapHeight * 0.8, 'ship')
+        this.spaceShip = new SpaceShip(this, mapWidth * 0.6, mapHeight * 0.6, spaceShip)
         this.physics.add.collider(this.spaceShip, this.groundLayer)
 
         // text score for fuels
         const style = { color: '#fff', fontSize: 8, fontFamily: 'Pixeled' }
-        const x = this.spaceShip.x
-        const y = this.spaceShip.y - this.spaceShip.height * 0.7
+        const x = this.spaceShip.body.x + this.spaceShip.body.width * 0.45
+        const y = this.spaceShip.body.y
 
         this.fuelCollectedText = this.add.text(x, y, '0/' + this.fuelToFinish, style)
             .setScrollFactor(0)
