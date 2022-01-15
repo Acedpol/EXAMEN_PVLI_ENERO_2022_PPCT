@@ -13,6 +13,11 @@ export default class Player extends Phaser.GameObjects.Container
     /** @type {Phaser.Physics.Arcade.Sprite} */
     player
 
+    /** @type {Boolean} */
+    carriesObject
+
+    /** @type {Fuel} */
+    fuel
     /**
      * Constructor del container del jugador
      * @param {Phaser.Scene} scene Escena a la que pertenece el jugador
@@ -50,6 +55,8 @@ export default class Player extends Phaser.GameObjects.Container
 
         // inicialización de variables
         this._speed = 100
+        this.carriesObject = false
+        this.fuel = null
     }
 
     preUpdate(t,dt)
@@ -124,6 +131,54 @@ export default class Player extends Phaser.GameObjects.Container
         {
             object.x = -halfWidth*3
         }
+    }
+
+    /** 
+     * Carries an object
+     * @param {Phaser.GameObjects.GameObject} object The object that will carry over
+     */
+    carryObject(object)
+    {
+        // keeps save the object
+        this.fuel = object
+        this.carriesObject = true
+
+        // disable from physics world
+        this.scene.physics.world.disableBody(object.body)
+
+        // Recoge el fuel y se lo añade a playerContainer (y lo coloca)
+        this.add(object)
+        object.setPosition(0, -object.height -2)
+        object.setOrigin(0)
+    }
+
+    /**
+     * Drops an object carried
+     */
+    dropObject()
+    {
+        if (this.carriesObject)
+        {
+            // hide from display (utilizado en caso de colectividad)
+            // this.scene.fuels.killAndHide(fuel)
+            
+            // suma uno al marcador
+            this.scene.fuelCollected++    
+            
+            // create new text value and set it
+            const value = this.scene.fuelCollected + '/' + this.scene.fuelToFinish
+            this.scene.fuelCollectedText.text = value
+
+            // removes the object from the scene
+            this.fuel.destroy() // posible recurso (utilizado en caso de exclusividad)
+
+            // reset values
+            this.fuel = null
+            this.carriesObject = false
+
+            // creates a new one if it's not finished the game
+            this.scene.createRandomFuel(this.scene.map)
+        }        
     }
 
 
