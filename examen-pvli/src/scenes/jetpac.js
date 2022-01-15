@@ -66,6 +66,9 @@ export default class JetPac extends Phaser.Scene
             this.fuelToFinish = 5
             this.cooldownAsteroids = 0.5
         }
+
+        // cancela las colisiones con el techo
+        this.physics.world.checkCollision.up = false
     }
 
     preload() 
