@@ -27,9 +27,19 @@ export default class Boot extends Phaser.Scene
         this.load.image('fuel', './assets/sprites/fuel.png')
         this.load.audio('pick', './assets/sounds/pick.wav')
 
+        // spaceShip
+        this.load.image('ship', './assets/sprites/spaceship.png')
+        this.load.audio('drop', './assets/sounds/drop.wav')
+
         // map
-        this.load.image('img_tilemap', './assets/sprites/tileset.png');
-        this.load.tilemapTiledJSON('nivel', './assets/map/space-jetpac.json');
+        this.load.image('img_tilemap', './assets/sprites/tileset.png')
+        this.load.tilemapTiledJSON('nivel', './assets/map/space-jetpac.json')
+
+        // jetpack audio
+        this.load.audio('jetpack', './assets/sounds/jetpack2.wav')
+
+        // walking audio
+        this.load.audio('walk-audio', './assets/sounds/soldier-walk.wav')
     }
 
     create() 
