@@ -1,5 +1,6 @@
 import Fuel from '../game/fuel.js'
 import PlayerContainer from '../game/playerContainer.js'
+import SpaceShip from '../game/spaceShip.js'
 
 export default class JetPac extends Phaser.Scene 
 {
@@ -7,7 +8,11 @@ export default class JetPac extends Phaser.Scene
     playerContainer
 
     /** @type {Phaser.Physics.Arcade.Group} */
-    fuels
+    // fuels
+
+    /** @type {Phaser.Physics.Arcade.Image} */
+    fuel
+    spaceShip
 
     /** @type {Phaser.Physics.Arcade.StaticBody} */
     platform
@@ -74,42 +79,26 @@ export default class JetPac extends Phaser.Scene
 
     create() 
     {
-        // gets the sizes of the screen
-        const{width,height} = this.scale
-
-        // Añade al jugador como Sprite
-        let player = this.add.sprite(0, 0, 'jetpac', 7)
-
-        // creates the player in the middle of the screen
-        this.playerContainer = new PlayerContainer(this, width * 0.5, height * 0.5, player)
-
-        // follow the player
-        this.cameras.main.startFollow(this.playerContainer)
-
         // creates the game map
         this.map = this.createMap('nivel', 8, 8, 'platform', 'img_tilemap', 'platforms')
-        this.physics.add.collider(this.playerContainer, this.groundLayer)
-
-        // World Bounds and Camera dead zones properties
-        this.worldBoundsNCameraDeadZones(this.map)
 
         // Grupo de Combustibles
+        /* 
         this.fuels = this.physics.add.group({
             classType: Fuel
         })
 
-        this.physics.add.collider(this.fuels, this.groundLayer)
+        this.physics.add.collider(this.fuels, this.groundLayer) 
+        */
 
-        // Crea todos los combustibles a recoger de la escena
-        for (let i = 0; i < this.fuelToFinish; i++) {
-            this.fuels.get(Phaser.Math.Between(25, width - 25), Phaser.Math.Between(25, height - 25), 'fuel')
-        }        
+        // Creates the player
+        this.createPlayer(this.map)
 
-        // text score for fuels
-        const style = { color: '#fff', fontSize: 8, fontFamily: 'Pixeled' }
-        this.fuelCollectedText = this.add.text(240, 10, '0/' + this.fuelToFinish, style)
-            .setScrollFactor(0)
-            .setOrigin(0.5, 0)
+        // Crea un combustible para recoger en la escena
+        this.createRandomFuel(this.map)
+
+        // Creates the spaceShip
+        this.createShip(this.map)        
     }
 
     update() 
@@ -160,9 +149,87 @@ export default class JetPac extends Phaser.Scene
         const mapHeight = map.height * map.tileHeight
     
         // tamaño del mundo de juego
-        this.physics.world.setBounds(mapWidth * (-0.5), 0, mapWidth * 2, mapHeight);
+        this.physics.world.setBounds(mapWidth * (-0.5), 0, mapWidth * 2, mapHeight)
 
         // set the horizontal dead zone to 1.5x game width         
         this.cameras.main.setDeadzone(mapWidth * 1.25, mapHeight * 0.655)
+    }
+
+    /**
+     * Creates a new random positioned fuel
+     * @param {Phaser.Tilemaps.Tilemap} map Mapa del juego ya creado
+     */
+    createRandomFuel(map)
+    {
+        // dimensiones del mapa
+        const mapWidth = map.width * map.tileWidth
+        const mapHeight = map.height * map.tileHeight
+
+        if (this.fuelCollected < this.fuelToFinish)
+        {
+            // creates new Fuel object to pick up
+            // this.fuels.get(Phaser.Math.Between(25, width - 25), Phaser.Math.Between(25, height - 25), 'fuel')
+            // this.fuel = new Fuel(this, Phaser.Math.Between(25, mapWidth - 25), Phaser.Math.Between(25, mapHeight - 25), 'fuel')
+            this.fuel = new Fuel(this, mapWidth - 10, mapHeight - 25, 'fuel')
+            this.physics.add.collider(this.fuel, this.groundLayer)
+        }
+        else
+        {
+            // inits the game main scene
+            this.scene.start('GameOver')
+        }
+    }
+
+    /**
+     * Creates and positions the spaceShip
+     * @param {Phaser.Tilemaps.Tilemap} map Mapa del juego ya creado
+     */
+    createShip(map)
+    {
+        // dimensiones del mapa
+        const mapWidth = map.width * map.tileWidth
+        const mapHeight = map.height * map.tileHeight
+
+        // creates the ship
+        this.spaceShip = new SpaceShip(this, mapWidth * 0.6, mapHeight * 0.8, 'ship')
+        this.physics.add.collider(this.spaceShip, this.groundLayer)
+
+        // text score for fuels
+        const style = { color: '#fff', fontSize: 8, fontFamily: 'Pixeled' }
+        const x = this.spaceShip.x
+        const y = this.spaceShip.y - this.spaceShip.height * 0.7
+
+        this.fuelCollectedText = this.add.text(x, y, '0/' + this.fuelToFinish, style)
+            .setScrollFactor(0)
+            .setOrigin(0.5, 0)
+    }
+
+    /**
+     * Creates and positions the player
+     * @param {Phaser.Tilemaps.Tilemap} map Mapa del juego ya creado
+     */
+    createPlayer(map)
+    {
+        // gets the sizes of the screen
+        const{width,height} = this.scale
+
+        // dimensiones del mapa
+        const mapWidth = map.width * map.tileWidth
+        const mapHeight = map.height * map.tileHeight
+
+        // Añade al jugador como Sprite
+        let player = this.add.sprite(0, 0, 'jetpac', 7)
+
+        // creates the player in the middle of the screen
+        this.playerContainer = new PlayerContainer(this, mapWidth * 0.2, mapHeight * 0.75, player)
+
+        // Adds main physics
+        this.physics.add.collider(this.playerContainer, this.groundLayer)
+
+        // follow the player
+        // this.cameras.main.startFollow(this.playerContainer)
+
+        // World Bounds and Camera dead zones properties
+        this.worldBoundsNCameraDeadZones(this.map)
     }
 }
