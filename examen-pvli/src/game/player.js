@@ -38,7 +38,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
 
     preUpdate(t,dt) 
     {
-        super.preUpdate(t,dt)
+        super.preUpdate(t,dt) // for animation
 
         // check if player is touching something below it
         const touchingDown = this.body.onFloor()
