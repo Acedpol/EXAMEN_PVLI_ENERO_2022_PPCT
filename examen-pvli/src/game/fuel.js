@@ -31,9 +31,9 @@ export default class Fuel extends Phaser.Physics.Arcade.Image
     preUpdate(t,dt) 
     {
         // checks if the player overlap with this GameObject
-        if (this.scene.physics.overlap(this.scene.player, this))
+        if (this.scene.physics.overlap(this.scene.playerContainer, this))
         {
-            this.handleCollectFuel(this.scene.player, this)
+            this.handleCollectFuel(this.scene.playerContainer, this)
         }
     }
 

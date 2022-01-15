@@ -1,14 +1,10 @@
 import Fuel from '../game/fuel.js'
 import PlayerContainer from '../game/playerContainer.js'
-import Player from '../game/player.js'
 
 export default class JetPac extends Phaser.Scene 
 {
     /** @type {Phaser.GameObjects.Container} */
     playerContainer
-
-    /** @type {Phaser.Physics.Arcade.Sprite} */
-    player
 
     /** @type {Phaser.Physics.Arcade.Group} */
     fuels
@@ -82,17 +78,16 @@ export default class JetPac extends Phaser.Scene
         const{width,height} = this.scale
 
         // Añade al jugador como Sprite
-        this.player = new Player(this, 0, 0, 'jetpac', 7)
+        let player = this.add.sprite(0, 0, 'jetpac', 7)
 
         // creates the player in the middle of the screen
-        this.playerContainer = new PlayerContainer(this, width * 0.5, height * 0.5, this.player)
+        this.playerContainer = new PlayerContainer(this, width * 0.5, height * 0.5, player)
 
         // follow the player
         this.cameras.main.startFollow(this.playerContainer)
 
         // creates the game map
         this.map = this.createMap('nivel', 8, 8, 'platform', 'img_tilemap', 'platforms')
-        this.physics.add.collider(this.player, this.groundLayer)
         this.physics.add.collider(this.playerContainer, this.groundLayer)
 
         // World Bounds and Camera dead zones properties

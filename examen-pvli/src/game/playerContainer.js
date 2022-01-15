@@ -41,6 +41,10 @@ export default class Player extends Phaser.GameObjects.Container
         this.body.setSize(this.player.width, this.player.height)
         this.player.setOrigin(0)
 
+        // initial animation pause
+        this.player.play('walk')
+        this.player.anims.pause()
+
         // eventos de teclado
         this.cursors = scene.input.keyboard.createCursorKeys() // init cursors
 
@@ -83,13 +87,11 @@ export default class Player extends Phaser.GameObjects.Container
         if (this.cursors.left.isDown)
         {
             this.body.setVelocityX(-100)
-            // this.x += -100 * dt / 1000
             this.player.flipX = true
         }
         else if (this.cursors.right.isDown)
         {
             this.body.setVelocityX(100)
-            // this.x += +100 * dt / 1000
             this.player.flipX = false
         }
         else
@@ -101,8 +103,6 @@ export default class Player extends Phaser.GameObjects.Container
         if (this.cursors.up.isDown)
         {
             this.body.setVelocityY(-100)
-            // this.y += -200 * dt / 1000
-            // console.log('t: '+ t + ', dt: ' + dt)
         }
 
         // wraps the player (movimiento toroidal)
