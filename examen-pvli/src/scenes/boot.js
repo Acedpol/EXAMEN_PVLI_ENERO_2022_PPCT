@@ -45,8 +45,8 @@ export default class Boot extends Phaser.Scene
         this.load.spritesheet('combustion', "./assets/sprites/combustion.png", 
             { frameWidth: 18, frameHeight: 17 })
 
-        // explosion audio
-        this.load.audio('explode', './assets/sounds/combustion.wav')
+        // combustion audio
+        this.load.audio('burst', './assets/sounds/combustion.wav')
 
         // win audio
         this.load.audio('win', './assets/sounds/win.wav')

@@ -14,7 +14,7 @@ export default class SpaceShip extends Phaser.GameObjects.Container
     combustion
 
     /** @type {Phaser.Sound.BaseSound} */
-    explode
+    burst
 
     /** @type {Phaser.Sound.BaseSound} */
     win
@@ -52,7 +52,7 @@ export default class SpaceShip extends Phaser.GameObjects.Container
         this.listaParaDespegue = false
 
         // inicialización de audios fx
-        this.explode = this.scene.sound.add('explode')
+        this.burst = this.scene.sound.add('burst')
         this.win = this.scene.sound.add('win')
     }
 
@@ -69,7 +69,7 @@ export default class SpaceShip extends Phaser.GameObjects.Container
             player.dropObject()
             this.scene.sound.play('drop')   // sound feedback
             this.body.setVelocityY(this._velocity)
-            this._velocity -= 50
+            this._velocity -= 25
         }
 
         // Cuando finaliza el juego: Despega!
@@ -78,9 +78,9 @@ export default class SpaceShip extends Phaser.GameObjects.Container
             this.Fly()
         }
 
-        if (this.explode.isPlaying && this.body.y < -this.body.height -this.combustion.height * 2)
+        if (this.burst.isPlaying && this.body.y < -this.body.height -this.combustion.height * 2)
         {
-            this.explode.pause()
+            this.burst.pause()
             this.scene.scene.start('GameOver')
         }
     }
@@ -106,7 +106,7 @@ export default class SpaceShip extends Phaser.GameObjects.Container
         this.listaParaDespegue = false
 
         // sfx
-        this.explode.play({
+        this.burst.play({
             volume: 5,
             rate: 1
         })

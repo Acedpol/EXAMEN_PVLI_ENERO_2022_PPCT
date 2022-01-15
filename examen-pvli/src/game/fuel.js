@@ -7,10 +7,10 @@ export default class Fuel extends Phaser.Physics.Arcade.Image
 
     /**
      * Constructor del objeto combustible
-     * @param {Phaser.Scene} scene Escena a la que pertenece el jugador
+     * @param {Phaser.Scene} scene Escena a la que pertenece el combustible
      * @param {number} x Coordenada X
      * @param {number} y Coordenada Y
-     * @param {Phaser.Textures.Texture} texture Textura usada en el jugador (spritesheet)
+     * @param {Phaser.Textures.Texture} texture Textura usada para el combustible (image)
      */
     constructor(scene, x, y, texture) 
     {
