@@ -1,8 +1,12 @@
 import Fuel from '../game/fuel.js'
-import player from '../game/player.js'
+import PlayerContainer from '../game/playerContainer.js'
+import Player from '../game/player.js'
 
 export default class JetPac extends Phaser.Scene 
 {
+    /** @type {Phaser.GameObjects.Container} */
+    playerContainer
+
     /** @type {Phaser.Physics.Arcade.Sprite} */
     player
 
@@ -74,15 +78,19 @@ export default class JetPac extends Phaser.Scene
         // gets the sizes of the screen
         const{width,height} = this.scale
 
+        // Añade al jugador como Sprite
+        this.player = new Player(this, 0, 0, 'jetpac', 7)
+
         // creates the player in the middle of the screen
-        this.player = new player(this, width * 0.5, height * 0.5, 'jetpac', 7)
+        this.playerContainer = new PlayerContainer(this, width * 0.5, height * 0.5, this.player)
 
         // follow the player
-        this.cameras.main.startFollow(this.player)        
+        this.cameras.main.startFollow(this.playerContainer)
 
         // creates the game map
         this.map = this.createMap('nivel', 8, 8, 'platform', 'img_tilemap', 'platforms')
         this.physics.add.collider(this.player, this.groundLayer)
+        this.physics.add.collider(this.playerContainer, this.groundLayer)
 
         // World Bounds and Camera dead zones properties
         this.worldBoundsNCameraDeadZones(this.map)
@@ -157,6 +165,6 @@ export default class JetPac extends Phaser.Scene
         this.physics.world.setBounds(mapWidth * (-0.5), 0, mapWidth * 2, mapHeight);
 
         // set the horizontal dead zone to 1.5x game width         
-        this.cameras.main.setDeadzone(mapWidth * 1.25, mapHeight * 0.75)
+        this.cameras.main.setDeadzone(mapWidth * 1.25, mapHeight * 0.655)
     }
 }

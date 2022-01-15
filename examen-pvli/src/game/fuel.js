@@ -1,5 +1,7 @@
 export default class Fuel extends Phaser.Physics.Arcade.Image
 {
+    /** @type {Phaser.Scene} */
+    scene
 
     /**
      * Constructor del objeto combustible
@@ -36,10 +38,10 @@ export default class Fuel extends Phaser.Physics.Arcade.Image
     }
 
     /**
-    * @param {Phaser.Physics.Arcade.Sprite} player
+    * @param {Phaser.GameObjects.Container} playerContainer
     * @param {Fuel} fuel
     */
-    handleCollectFuel(player, fuel)
+    handleCollectFuel(playerContainer, fuel)
     {
         // hide from display
         this.scene.fuels.killAndHide(fuel)
