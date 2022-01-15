@@ -44,7 +44,7 @@ export default class Menu extends Phaser.Scene
 
     update() 
     {
-        
+
     }
 
     /**
@@ -74,13 +74,20 @@ export default class Menu extends Phaser.Scene
             })
             .setScale(2.25, 1)
 
+        // selecciona el color del texto
+        let _color = ''
+        if (lv == 1) _color = '#4444FF'
+        else if (lv == 2) _color = '#00FF00'
+        else if (lv == 3) _color = '#FF0000'
+
         // compone el button con un texto
         this.add.text(x, y, name, {
                 fontSize: 14,
                 fontFamily: 'Pixeled',
                 fontStyle: 'bold', 
-                color: '#00FF00'
+                color: _color
             })
             .setOrigin(0.5)
     }
+    
 }

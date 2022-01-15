@@ -10,8 +10,10 @@ export default class JetPac extends Phaser.Scene
     /** @type {Phaser.Physics.Arcade.Group} */
     // fuels
 
-    /** @type {Phaser.Physics.Arcade.Image} */
+    /** @type {Fuel} */
     fuel
+
+    /** @type {SpaceShip} */
     spaceShip
 
     /** @type {Phaser.Physics.Arcade.StaticBody} */
@@ -169,8 +171,8 @@ export default class JetPac extends Phaser.Scene
         {
             // creates new Fuel object to pick up
             // this.fuels.get(Phaser.Math.Between(25, width - 25), Phaser.Math.Between(25, height - 25), 'fuel')
-            // this.fuel = new Fuel(this, Phaser.Math.Between(25, mapWidth - 25), Phaser.Math.Between(25, mapHeight - 25), 'fuel')
-            this.fuel = new Fuel(this, mapWidth - 10, mapHeight - 25, 'fuel')
+            this.fuel = new Fuel(this, Phaser.Math.Between(25, mapWidth - 25), Phaser.Math.Between(25, mapHeight - 25), 'fuel')
+            // this.fuel = new Fuel(this, mapWidth - 10, mapHeight - 25, 'fuel')
             this.physics.add.collider(this.fuel, this.groundLayer)
         }
         else

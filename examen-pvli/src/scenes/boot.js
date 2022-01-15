@@ -40,6 +40,13 @@ export default class Boot extends Phaser.Scene
 
         // walking audio
         this.load.audio('walk-audio', './assets/sounds/soldier-walk.wav')
+
+        // combustion space-ship
+        this.load.spritesheet('combustion', "./assets/sprites/combustion.png", 
+            { frameWidth: 18, frameHeight: 17 })
+
+        // explosion
+        this.load.audio('explode', './assets/sounds/explosion.wav')
     }
 
     create() 
@@ -61,7 +68,7 @@ export default class Boot extends Phaser.Scene
         })
 
         // inits the game menu scene
-        this.scene.start('jetpacGame')
+        this.scene.start('menuGeomGame')
     }
 
     update() 

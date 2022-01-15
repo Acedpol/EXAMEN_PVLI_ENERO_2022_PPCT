@@ -39,7 +39,7 @@ export default class GameOver extends Phaser.Scene
 
         // click to play again
         this.input.keyboard.once('keydown-SPACE', () => {
-            this.scene.start('menuGame')
+            this.scene.start('menuGeomGame')
         })
     }
 
