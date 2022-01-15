@@ -5,6 +5,9 @@ export default class SpaceShip extends Phaser.Physics.Arcade.Image
     /** @type {Phaser.Scene} */
     scene
 
+    /** @type {Boolean} */
+    lista
+
     /**
      * Constructor del objeto combustible
      * @param {Phaser.Scene} scene Escena a la que pertenece el jugador

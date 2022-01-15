@@ -177,8 +177,9 @@ export default class JetPac extends Phaser.Scene
         }
         else
         {
+            this.spaceShip.lista = true
             // inits the game main scene
-            this.scene.start('GameOver')
+            // this.scene.start('GameOver')
         }
     }
 
