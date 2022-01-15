@@ -200,7 +200,7 @@ export default class PlayerContainer extends Phaser.GameObjects.Container
             // this.scene.fuels.killAndHide(fuel)
             
             // suma uno al marcador
-            this.scene.fuelCollected++    
+            this.scene.fuelCollected++
             
             // create new text value and set it
             const value = this.scene.fuelCollected + '/' + this.scene.fuelToFinish

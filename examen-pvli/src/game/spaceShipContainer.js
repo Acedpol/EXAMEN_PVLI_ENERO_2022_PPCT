@@ -48,15 +48,18 @@ export default class SpaceShip extends Phaser.GameObjects.Container
         
         // inicialización de variables
         this._aceleration = -250
+        this._velocity = -75
         this.listaParaDespegue = false
 
         // inicialización de audios fx
-        this.explode = this.scene.sound.add('jetpack')
-        this.win = this.scene.sound.add('walk-audio')
+        this.explode = this.scene.sound.add('explode')
+        this.win = this.scene.sound.add('win')
     }
 
     preUpdate(t,dt) 
     {
+        // this.iterate( (child) => child.preUpdate(t,dt) ) // for animations
+
         /** @type {PlayerContainer} */
         let player = this.scene.playerContainer
 
@@ -65,13 +68,58 @@ export default class SpaceShip extends Phaser.GameObjects.Container
         {
             player.dropObject()
             this.scene.sound.play('drop')   // sound feedback
+            this.body.setVelocityY(this._velocity)
+            this._velocity -= 50
         }
 
         // Cuando finaliza el juego: Despega!
-        if (this.listaParaDespegue)
+        if (this.listaParaDespegue && !this.win.isPlaying)
         {
-            this.body.setAccelerationY(this._aceleration)
+            this.Fly()
         }
+
+        if (this.explode.isPlaying && this.body.y < -this.body.height -this.combustion.height * 2)
+        {
+            this.explode.pause()
+            this.scene.scene.start('GameOver')
+        }
+    }
+
+    /**
+     * Prepara la nave para el depegue...
+     */
+    prepareToFlight()
+    {
+        // Sonido de victoria y activa el final
+        this.listaParaDespegue = true
+        this.win.play()
+    }
+
+    /**
+     * Lanza la nave al depegue!!
+     */
+    Fly()
+    {
+        // set the acceleration to fly out y avisa
+        this.body.setVelocityY(-20)
+        this.body.setAccelerationY(this._aceleration)
+        this.listaParaDespegue = false
+
+        // sfx
+        this.explode.play({
+            volume: 5,
+            rate: 1
+        })
+
+        // Aparece la combustion del motor de la nave
+        this.combustion = this.scene.add.sprite(0, 0, this.body.width, this.body.width)
+        this.add(this.combustion)
+        this.combustion.setPosition(0, this.body.height)
+        this.combustion.setOrigin(0)
+        this.combustion.play('fly')
+
+        // El jugador "sube" a la nave
+        this.scene.playerContainer.destroy()
     }
 
 }

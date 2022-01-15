@@ -13,7 +13,7 @@ export default class JetPac extends Phaser.Scene
     /** @type {Fuel} */
     fuel
 
-    /** @type {SpaceShipContainer} */
+    /** @type {SpaceShip} */
     spaceShip
 
     /** @type {Phaser.Physics.Arcade.StaticBody} */
@@ -177,7 +177,7 @@ export default class JetPac extends Phaser.Scene
         }
         else
         {
-            this.spaceShip.listaParaDespegue = true
+            this.spaceShip.prepareToFlight()
             // inits the game main scene
             // this.scene.start('GameOver')
         }

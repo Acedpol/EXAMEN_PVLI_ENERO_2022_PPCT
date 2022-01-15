@@ -46,10 +46,10 @@ export default class Boot extends Phaser.Scene
             { frameWidth: 18, frameHeight: 17 })
 
         // explosion audio
-        this.load.audio('explode', './assets/sounds/explosion.wav')
+        this.load.audio('explode', './assets/sounds/combustion.wav')
 
         // win audio
-        this.load.audio('explode', './assets/sounds/win.wav')
+        this.load.audio('win', './assets/sounds/win.wav')
     }
 
     create() 
@@ -66,6 +66,14 @@ export default class Boot extends Phaser.Scene
         this.anims.create({
           key: 'jump',
           frames: this.anims.generateFrameNames('jetpac', { start: 0, end: 3 }),
+          frameRate: 10,
+          repeat: -1
+        })
+
+        // creates combustion animation for spaceship
+        this.anims.create({
+          key: 'fly',
+          frames: this.anims.generateFrameNames('combustion', { start: 0, end: 1 }),
           frameRate: 10,
           repeat: -1
         })
