@@ -6,8 +6,8 @@ export default class JetPac extends Phaser.Scene
     /** @type {Phaser.Physics.Arcade.Sprite} */
     player
 
-    /** @type {Phaser.Physics.Arcade.Image} */
-    fuel
+    /** @type {Phaser.Physics.Arcade.Group} */
+    fuels
 
     /** @type {Phaser.Physics.Arcade.StaticBody} */
     platform
@@ -45,6 +45,7 @@ export default class JetPac extends Phaser.Scene
 
         // Level parameters by difficulty
         this.fuelCollected = 0
+        this.fuelToFinish = 2
 
         if (this.level == 1)
         {
@@ -86,9 +87,23 @@ export default class JetPac extends Phaser.Scene
         // World Bounds and Camera dead zones properties
         this.worldBoundsNCameraDeadZones(this.map)
 
-        // Combustible
-        this.fuel = new Fuel(this, Phaser.Math.Between(25, width - 25), Phaser.Math.Between(25, height - 25), 'fuel')
-        this.physics.add.collider(this.fuel, this.groundLayer)
+        // Grupo de Combustibles
+        this.fuels = this.physics.add.group({
+            classType: Fuel
+        })
+
+        this.physics.add.collider(this.fuels, this.groundLayer)
+
+        // Crea todos los combustibles a recoger de la escena
+        for (let i = 0; i < this.fuelToFinish; i++) {
+            this.fuels.get(Phaser.Math.Between(25, width - 25), Phaser.Math.Between(25, height - 25), 'fuel')
+        }        
+
+        // text score for fuels
+        const style = { color: '#fff', fontSize: 8, fontFamily: 'Pixeled' }
+        this.fuelCollectedText = this.add.text(240, 10, '0/' + this.fuelToFinish, style)
+            .setScrollFactor(0)
+            .setOrigin(0.5, 0)
     }
 
     update() 

@@ -25,6 +25,7 @@ export default class Boot extends Phaser.Scene
 
         // fuel
         this.load.image('fuel', './assets/sprites/fuel.png')
+        this.load.audio('pick', './assets/sounds/pick.wav')
 
         // map
         this.load.image('img_tilemap', './assets/sprites/tileset.png');
