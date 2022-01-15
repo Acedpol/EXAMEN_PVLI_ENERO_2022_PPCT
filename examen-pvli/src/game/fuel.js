@@ -43,11 +43,18 @@ export default class Fuel extends Phaser.Physics.Arcade.Image
     */
     handleCollectFuel(playerContainer, fuel)
     {
+        /** @type {Phaser.GameObjects.GameObject.body} */
+
         // hide from display
-        this.scene.fuels.killAndHide(fuel)
+        // this.scene.fuels.killAndHide(fuel)
         
         // disable from physics world
         this.scene.physics.world.disableBody(this.body)
+
+        // Recoge el fuel y se lo añade a playerContainer (y lo coloca)
+        playerContainer.add(fuel)
+        fuel.setPosition(0, -fuel.height -2)
+        fuel.setOrigin(0)
         
         this.scene.fuelCollected++
         this.scene.sound.play('pick')
