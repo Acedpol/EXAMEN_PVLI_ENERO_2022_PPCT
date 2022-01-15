@@ -84,6 +84,26 @@ export default class MenuGeom extends Phaser.Scene
         this.scene.start('jetpacGame', lv)
     }
 
+    /**
+     * Hace la zona que corresponde al rectangulo interactiva
+     * @param {Phaser.Geom.Rectangle} rect Rectangulo usado en el fondo del button
+     * @param {Number} lv Nivel de dificultad
+     */
+    setInteractiveZone(rect, lv)
+    {
+        let x = rect.x + rect.width * 0.5
+        let y = rect.y + rect.height * 0.5
+
+        // sets the zone that is interactive
+        var zone = this.add.zone(x, y, rect.width, rect.height)
+            .setInteractive({
+                hitArea: rect,
+                useHandCursor: true
+            })
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, ()=>{
+                this.initGame(lv)
+            })
+    }
 
     /**
      * Constructor del button con geometría de phaser (rectangle)
