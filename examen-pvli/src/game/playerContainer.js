@@ -1,5 +1,5 @@
 /** @type {Phaser.GameObjects.GameObject} */
-export default class Player extends Phaser.GameObjects.Container
+export default class PlayerContainer extends Phaser.GameObjects.Container
 {
     /** @type {Phaser.Scene} */
     scene
@@ -18,6 +18,13 @@ export default class Player extends Phaser.GameObjects.Container
 
     /** @type {Fuel} */
     fuel
+
+    /** @type {Phaser.Sound.BaseSound} */
+    jetpack
+
+    /** @type {Phaser.Sound.BaseSound} */
+    walk
+
     /**
      * Constructor del container del jugador
      * @param {Phaser.Scene} scene Escena a la que pertenece el jugador
@@ -57,6 +64,10 @@ export default class Player extends Phaser.GameObjects.Container
         this._speed = 100
         this.carriesObject = false
         this.fuel = null
+
+        // inicialización de audios fx
+        this.jetpack = this.scene.sound.add('jetpack')
+        this.walk = this.scene.sound.add('walk-audio')
     }
 
     preUpdate(t,dt)
@@ -75,19 +86,45 @@ export default class Player extends Phaser.GameObjects.Container
             }
             // resume animation
             this.player.anims.resume()
+
+            // sfx
+            if (!this.walk.isPlaying)
+            {
+                this.walk.play({
+                    volume: 0.75,
+                    rate: 1.5
+                })
+            }
         }
         else if (touchingDown)
         {
             // initial animation pause
-            this.player.play('walk')
+            this.player.play('walk')    
             this.player.anims.pause()
+
+            this.walk.stop() // keeps sure to stop playing sound
         }
 
         // flying animation
         if (!touchingDown)
         {
+            // sfx
+            if (!this.jetpack.isPlaying)
+            {
+                this.jetpack.play({
+                    volume: 0.5
+                })
+            }
+
+            // animation
             if (this.player.anims.currentAnim.key != 'jump')
                 this.player.play('jump')
+
+            this.walk.stop() // keeps sure to stop playing sound
+        }
+        else
+        {
+            this.jetpack.stop() // keeps sure to stop playing sound
         }
 
         // left and right input logic
