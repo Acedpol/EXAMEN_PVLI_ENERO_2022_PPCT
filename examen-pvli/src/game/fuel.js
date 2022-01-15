@@ -1,3 +1,5 @@
+import PlayerContainer from '../game/playerContainer.js'
+
 export default class Fuel extends Phaser.Physics.Arcade.Image
 {
     /** @type {Phaser.Scene} */
@@ -30,40 +32,15 @@ export default class Fuel extends Phaser.Physics.Arcade.Image
 
     preUpdate(t,dt) 
     {
+        /** @type {PlayerContainer} */
+        let container = this.scene.playerContainer
+
         // checks if the player overlap with this GameObject
-        if (this.scene.physics.overlap(this.scene.playerContainer, this))
-        {
-            this.handleCollectFuel(this.scene.playerContainer, this)
+        if (this.scene.physics.overlap(this, this.scene.playerContainer))
+        {            
+            container.carryObject(this)
+            this.scene.sound.play('pick')   // sound feedback
         }
-    }
-
-    /**
-    * @param {Phaser.GameObjects.Container} playerContainer
-    * @param {Fuel} fuel
-    */
-    handleCollectFuel(playerContainer, fuel)
-    {
-        /** @type {Phaser.GameObjects.GameObject.body} */
-
-        // hide from display
-        // this.scene.fuels.killAndHide(fuel)
-        
-        // disable from physics world
-        this.scene.physics.world.disableBody(this.body)
-
-        // Recoge el fuel y se lo añade a playerContainer (y lo coloca)
-        playerContainer.add(fuel)
-        fuel.setPosition(0, -fuel.height -2)
-        fuel.setOrigin(0)
-        
-        this.scene.fuelCollected++
-        this.scene.sound.play('pick')
-        
-        // create new text value and set it
-        const value = this.scene.fuelCollected + '/' + this.scene.fuelToFinish
-        this.scene.fuelCollectedText.text = value
-
-        // fuel.destroy() // posible recurso (no utilizado)
     }
 
 }
