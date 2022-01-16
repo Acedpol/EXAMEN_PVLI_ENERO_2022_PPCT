@@ -41,9 +41,9 @@ export default class PlayerContainer extends Phaser.GameObjects.Container
         this.scene.physics.add.existing(this)
 
         // disable some direction colliders from player
-        this.body.checkCollision.up = false
-        this.body.checkCollision.right = false
-        this.body.checkCollision.left = false
+        // this.body.checkCollision.up = false
+        // this.body.checkCollision.right = false
+        // this.body.checkCollision.left = false
 
         // colisiona con los bordes del mundo de juego
         this.body.collideWorldBounds = true

@@ -48,8 +48,22 @@ export default class Boot extends Phaser.Scene
         // combustion audio
         this.load.audio('burst', './assets/sounds/combustion.wav')
 
+        // explode audio
+        this.load.audio('explode', './assets/sounds/explosion.wav')
+
         // win audio
         this.load.audio('win', './assets/sounds/win.wav')
+
+        // lose audio
+        this.load.audio('lose', './assets/sounds/lose.wav')
+
+        // meteoro spritesheet
+        this.load.spritesheet('meteor', "./assets/sprites/meteor.png", 
+            { frameWidth: 16, frameHeight: 14 }) 
+
+        // explosion spritesheet
+        this.load.spritesheet('explosion', "./assets/sprites/explosion.png", 
+            { frameWidth: 24, frameHeight: 17 }) 
     }
 
     create() 
@@ -75,6 +89,22 @@ export default class Boot extends Phaser.Scene
           key: 'fly',
           frames: this.anims.generateFrameNames('combustion', { start: 0, end: 1 }),
           frameRate: 10,
+          repeat: -1
+        })
+
+        // creates meteor animation for enemies
+        this.anims.create({
+          key: 'fly-meteor',
+          frames: this.anims.generateFrameNames('meteor', { start: 0, end: 3 }),
+          frameRate: 6,
+          repeat: -1
+        })
+
+        // creates meteor animation for enemies
+        this.anims.create({
+          key: 'explote',
+          frames: this.anims.generateFrameNames('explosion', { start: 0, end: 2 }),
+          frameRate: 5,
           repeat: -1
         })
 

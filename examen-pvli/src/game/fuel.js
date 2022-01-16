@@ -36,7 +36,7 @@ export default class Fuel extends Phaser.Physics.Arcade.Image
         let container = this.scene.playerContainer
 
         // checks if the player overlap with this GameObject
-        if (this.scene.physics.overlap(this, this.scene.playerContainer))
+        if (this.scene.physics.overlap(this, container))
         {            
             container.carryObject(this)
             this.scene.sound.play('pick')   // sound feedback

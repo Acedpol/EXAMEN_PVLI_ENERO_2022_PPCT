@@ -81,6 +81,7 @@ export default class SpaceShip extends Phaser.GameObjects.Container
         if (this.burst.isPlaying && this.body.y < -this.body.height -this.combustion.height * 2)
         {
             this.burst.pause()
+            // inits the game final scene
             this.scene.scene.start('GameOver')
         }
     }
