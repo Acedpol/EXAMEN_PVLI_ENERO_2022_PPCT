@@ -1,14 +1,15 @@
 import Fuel from '../game/fuel.js'
 import PlayerContainer from '../game/playerContainer.js'
 import SpaceShip from '../game/spaceShipContainer.js'
+import Meteor from '../game/meteoro.js'
 
 export default class JetPac extends Phaser.Scene 
 {
     /** @type {Phaser.GameObjects.Container} */
     playerContainer
 
-    /** @type {Phaser.Physics.Arcade.Group} */
-    // fuels
+    /** @type {Phaser.Physics.Arcade.StaticGroup} */
+    meteoros
 
     /** @type {Fuel} */
     fuel
@@ -34,6 +35,12 @@ export default class JetPac extends Phaser.Scene
     /** @type {Phaser.Tilemaps.TilemapLayer} */
     groundLayer
 
+    /** @type {Number} */
+    lastMeteorTime
+
+    /** @type {Number} */
+    timeLapsed
+
     /**
      * Constructor de la escena
      */
@@ -57,17 +64,17 @@ export default class JetPac extends Phaser.Scene
         if (this.level == 1)
         {
             this.fuelToFinish = 2
-            this.cooldownAsteroids = 2
+            this.cooldownAsteroids = 2 * 1000
         }
         else if (this.level == 2)
         {
             this.fuelToFinish = 3
-            this.cooldownAsteroids = 1
+            this.cooldownAsteroids = 1 * 1000
         }
         else if (this.level == 3)
         {
             this.fuelToFinish = 5
-            this.cooldownAsteroids = 0.5
+            this.cooldownAsteroids = 0.5 * 1000
         }
 
         // cancela las colisiones con el techo
@@ -84,14 +91,12 @@ export default class JetPac extends Phaser.Scene
         // creates the game map
         this.map = this.createMap('nivel', 8, 8, 'platform', 'img_tilemap', 'platforms')
 
-        // Grupo de Combustibles
-        /* 
-        this.fuels = this.physics.add.group({
-            classType: Fuel
+        // Grupo de Meteoritos
+        this.meteoros = this.physics.add.group({
+            classType: Meteor
         })
 
-        this.physics.add.collider(this.fuels, this.groundLayer) 
-        */
+        this.physics.add.collider(this.meteoros, this.groundLayer)
 
         // Creates the player
         this.createPlayer(this.map)
@@ -100,10 +105,11 @@ export default class JetPac extends Phaser.Scene
         this.createRandomFuel(this.map)
 
         // Creates the spaceShip
-        this.createShip(this.map)        
+        this.createShip(this.map)
+
     }
 
-    update() 
+    update(t, dt) 
     {
         
     }
@@ -170,16 +176,12 @@ export default class JetPac extends Phaser.Scene
         if (this.fuelCollected < this.fuelToFinish)
         {
             // creates new Fuel object to pick up
-            // this.fuels.get(Phaser.Math.Between(25, width - 25), Phaser.Math.Between(25, height - 25), 'fuel')
             this.fuel = new Fuel(this, Phaser.Math.Between(25, mapWidth - 25), Phaser.Math.Between(25, mapHeight - 25), 'fuel')
-            // this.fuel = new Fuel(this, mapWidth - 10, mapHeight - 25, 'fuel')
             this.physics.add.collider(this.fuel, this.groundLayer)
         }
         else
         {
-            this.spaceShip.prepareToFlight()
-            // inits the game main scene
-            // this.scene.start('GameOver')
+            this.spaceShip.prepareToFlight() // practically-end-scene
         }
     }
 
@@ -237,5 +239,38 @@ export default class JetPac extends Phaser.Scene
 
         // World Bounds and Camera dead zones properties
         this.worldBoundsNCameraDeadZones(this.map)
+    }
+
+     /**
+     * Creates a new random positioned meteor
+     * @param {Phaser.Tilemaps.Tilemap} map Mapa del juego ya creado
+     */
+    createRandomMeteor(map)
+    {
+        // dimensiones del mapa
+        const mapWidth = map.width * map.tileWidth
+        const mapHeight = map.height * map.tileHeight
+
+        // position
+        let x = Phaser.Math.Between(10, mapWidth - 10)
+        let y = Phaser.Math.Between(10, mapHeight * -0.15)
+
+        let meteor = this.meteoros.create(x, y, 'meteor')
+        this.physics.add.collider(meteor, this.groundLayer)
+    }
+
+    /**
+     * Game Lose, the has die
+     * @param {Phaser.GameObjects.GameObject} object The object that kill the player
+     */
+    handleGameLose(object)
+    {
+        // kill object and play feedback
+        this.playerContainer.destroy()
+        this.meteoros.killAndHide(object)
+        this.sound.play('lose')
+
+        // inits the game final scene
+        this.scene.start('GameOver')
     }
 }
