@@ -35,6 +35,34 @@ export default class Meteor extends Phaser.Physics.Arcade.Sprite
         this.setActive(true)
         this.setVisible(true)
 
+        // inicialización de variables //
+
+        // sets the angle of the object
+        let ang = Phaser.Math.Between(1, 179)
+        this.angle = ang
+
+        // sets the vector velocity
+        let PI = 3.1416
+        let velY = Phaser.Math.FloatBetween(0.5, 1)
+        let velX
+        if (ang <= 90)
+        {
+            let a = ang * PI / 180
+            velX = velY / Math.sin(a) * Math.cos(a)
+        }
+        else
+        {
+            let a = (180 - ang) * PI / 180
+            velX = velY / Math.sin(a) * Math.cos(a)
+            velX *= -1
+        }
+
+        this.vel = new Phaser.Math.Vector2(velX, velY)
+        this.vel.normalize()
+
+        // scales the velocity
+        this.incV = 30
+        this.vel.scale(this.incV)
 
         // animation
         this.play('fly-meteor')
