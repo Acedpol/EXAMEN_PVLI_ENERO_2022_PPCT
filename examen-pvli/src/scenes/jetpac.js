@@ -107,11 +107,23 @@ export default class JetPac extends Phaser.Scene
         // Creates the spaceShip
         this.createShip(this.map)
 
+        // Inits the timer
+        this.timeLapsed = 0
+        this.createRandomMeteor(this.map)
     }
 
     update(t, dt) 
     {
-        
+        // actualiza el timer
+        this.timeLapsed = this.timeLapsed + dt
+
+        // Cooldown to create a new meteor
+        if (this.timeLapsed > this.cooldownAsteroids)
+        {
+            this.createRandomMeteor(this.map)
+            this.timeLapsed = 0
+        }
+
     }
 
     /**
