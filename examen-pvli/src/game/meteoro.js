@@ -1,5 +1,3 @@
-import PlayerContainer from '../game/playerContainer.js'
-
 export default class Meteor extends Phaser.Physics.Arcade.Sprite
 {
     /** @type {Phaser.Scene} */

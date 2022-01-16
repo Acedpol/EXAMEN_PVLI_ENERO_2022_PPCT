@@ -188,7 +188,7 @@ export default class JetPac extends Phaser.Scene
         if (this.fuelCollected < this.fuelToFinish)
         {
             // creates new Fuel object to pick up
-            this.fuel = new Fuel(this, Phaser.Math.Between(25, mapWidth - 25), Phaser.Math.Between(25, mapHeight - 25), 'fuel')
+            this.fuel = new Fuel(this, Phaser.Math.Between(12, mapWidth - 12), Phaser.Math.Between(12, mapHeight - 12), 'fuel')
             this.physics.add.collider(this.fuel, this.groundLayer)
         }
         else
